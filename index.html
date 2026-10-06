@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Beyond the Prompt: an interactive reflection on appearance, assumptions, and visual bias in AI-generated portraits.">
+  <title>Queer by Prompt — Beyond the Prompt</title>
+  <link rel="stylesheet" href="styles.css?v=section-colors">
+  <link rel="stylesheet" href="home.css?v=white-slogan">
+  <link rel="stylesheet" href="whats-next.css?v=dark-section">
+  <script src="home.js?v=aurora2" defer></script>
+  <script src="rounds.js?v=artist-keyword" defer></script>
+  <script src="app.js?v=artist-keyword" defer></script>
+  <script src="titles.js" defer></script>
+  <script src="comparison-data.js" defer></script>
+  <script src="comparison.js?v=scroll-titles" defer></script>
+  <script src="findings.js" defer></script>
+  <script src="whats-next.js?v=coverflow" defer></script>
+  <script src="next-carousel.js" defer></script>
+</head>
+<body>
+  <main>
+    <section class="opening-screen home-screen" id="home" aria-labelledby="home-title">
+      <div class="home-frame">
+        <div class="home-aurora" aria-hidden="true">
+          <div class="home-aurora-fallback"></div>
+          <canvas class="home-aurora-canvas"></canvas>
+        </div>
+        <p class="home-slogan"><span>Examine your judgements</span> <span>Identify recurring visual patterns</span></p>
+        <h1 class="home-title" id="home-title"><span>Queer</span> <span>by Prompt</span></h1>
+        <a class="home-glass" href="#blind-guess" aria-label="Scroll to begin Blind Guess"><span>scroll to begin</span></a>
+      </div>
+    </section>
+
+    <section class="blind-screen" id="blind-guess" aria-labelledby="page-title">
+      <div class="activity" id="activity">
+        <header class="activity-header">
+          <div class="title-block">
+            <h1 id="page-title" tabindex="-1">Blind Guess</h1>
+          </div>
+        </header>
+
+        <div class="portrait-stage" id="portrait-stage" role="group" aria-label="Portrait and keyword choices" aria-describedby="selection-help">
+          <figure class="portrait">
+            <img id="portrait-image" src="assets/images/blind-guess-1.png" alt="Portrait of a young East Asian adult with medium-length dark hair wearing a dark jacket over a white top." width="1086" height="1448" fetchpriority="high">
+          </figure>
+          <div class="keywords" id="keywords" role="group" aria-label="Choose up to five keywords"></div>
+        </div>
+
+        <footer class="activity-footer">
+          <div class="progress-block">
+            <div class="progress-row">
+              <span id="round-progress" class="round-progress" aria-label="Round 1 of 3">01 <span>/ 03</span></span>
+              <div class="progress-marks" aria-hidden="true"><span class="current"></span><span></span><span></span></div>
+            </div>
+          </div>
+          <div class="selection-block">
+            <p class="selection-count" id="selection-count" aria-live="polite" aria-atomic="true">Selected: <strong>0</strong> / 5</p>
+            <p class="selection-help" id="selection-help">Choose a prompt word. Click again to remove it.</p>
+          </div>
+          <button class="next-button" id="next-button" type="button" disabled>
+            <span class="button-label" id="next-label">Next</span>
+            <span class="button-hover-content" aria-hidden="true"><span class="button-hover-label">Next</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></span>
+            <span class="button-dot" aria-hidden="true"></span>
+          </button>
+        </footer>
+      </div>
+
+      <div class="results" id="results" hidden aria-labelledby="results-title">
+        <header class="results-header">
+          <h2 id="results-title" tabindex="-1">How Much Did You Assume?</h2>
+        </header>
+        <div class="result-overview">
+          <div class="score-block">
+            <p class="eyebrow">Visible information score</p>
+            <p class="total-score"><span id="total-score">0</span><span class="score-denominator">/ 30</span></p>
+          </div>
+          <div class="reflection-copy">
+            <p class="eyebrow">What your choices suggest</p>
+            <h3 id="reflection-title"></h3>
+            <p id="reflection-text"></p>
+          </div>
+        </div>
+        <div class="result-details">
+          <details id="choices-details">
+            <summary><span><span class="detail-number">01</span> Look closer at your choices</span><span class="disclosure-symbol" aria-hidden="true"></span></summary>
+            <div class="detail-content" id="round-reviews"></div>
+          </details>
+          <details id="prompt-details">
+            <summary><span><span class="detail-number">02</span> See what the AI was originally asked to generate</span><span class="disclosure-symbol" aria-hidden="true"></span></summary>
+            <div class="detail-content">
+              <div class="prompt-grid" id="prompt-contexts"></div>
+            </div>
+          </details>
+        </div>
+      </div>
+      <noscript><p class="no-script">Please enable JavaScript to take part in Blind Guess.</p></noscript>
+    </section>
+    <section class="comparison-screen" id="prompt-comparison" aria-labelledby="comparison-title">
+      <div class="comparison-inner">
+        <h2 class="comparison-title" id="comparison-title">Prompt Comparison</h2>
+        <div class="comparison-panels" aria-busy="false">
+          <figure class="comparison-panel">
+            <figcaption><h3>Baseline</h3></figcaption>
+            <div class="comparison-image-frame">
+              <span class="comparison-placeholder">Your baseline image</span>
+              <img id="baseline-image" width="1448" height="1086" alt="" hidden>
+            </div>
+          </figure>
+          <figure class="comparison-panel">
+            <figcaption><h3>Modified</h3></figcaption>
+            <div class="comparison-image-frame">
+              <span class="comparison-placeholder">Your modified image</span>
+              <img id="modified-image" width="1448" height="1086" alt="" hidden>
+            </div>
+          </figure>
+        </div>
+        <form class="comparison-controls" id="comparison-form">
+          <div class="comparison-field">
+            <div class="comparison-select-wrap"><select id="comparison-identity" name="identity" aria-label="Identity" required><option value="" selected disabled>Choose identity</option></select></div>
+          </div>
+          <div class="comparison-field">
+            <div class="comparison-select-wrap"><select id="comparison-age" name="age" aria-label="Age" required><option value="" selected disabled>Choose age</option></select></div>
+          </div>
+          <div class="comparison-field">
+            <div class="comparison-select-wrap"><select id="comparison-relationship" name="relationship" aria-label="Relationship" required><option value="" selected disabled>Choose relationship</option></select></div>
+          </div>
+          <button class="next-button comparison-generate" id="comparison-generate" type="submit" disabled>
+            <span class="button-label">Generate</span>
+            <span class="button-hover-content" aria-hidden="true"><span class="button-hover-label">Generate</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></span>
+            <span class="button-dot" aria-hidden="true"></span>
+          </button>
+        </form>
+        <p class="comparison-status" id="comparison-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+    <section class="findings-screen" id="findings" aria-labelledby="findings-title">
+      <div class="findings-sticky">
+        <h2 class="findings-title" id="findings-title">Findings</h2>
+        <div class="findings-viewport">
+          <div class="findings-track">
+            <article class="finding-card" tabindex="0" aria-labelledby="finding-gay">
+              <div class="finding-content">
+                <h3 id="finding-gay">Gay</h3>
+                <ul><li>Short hair</li><li>Facial hair</li><li>Masculine styling</li><li>Dark layers</li><li>Similar silhouettes</li></ul>
+              </div>
+            </article>
+            <article class="finding-card" tabindex="0" aria-labelledby="finding-lesbian">
+              <div class="finding-content">
+                <h3 id="finding-lesbian">Lesbian</h3>
+                <ul><li>Short hair</li><li>Tied hair</li><li>Loose jackets</li><li>Dark tops</li><li>Contrasting hairstyles</li></ul>
+              </div>
+            </article>
+            <article class="finding-card" tabindex="0" aria-labelledby="finding-non-binary">
+              <div class="finding-content">
+                <h3 id="finding-non-binary">Non-binary</h3>
+                <ul><li>Cropped hair</li><li>Tousled hair</li><li>Androgynous styling</li><li>Loose layers</li><li>Dark trousers</li></ul>
+              </div>
+            </article>
+            <article class="finding-card" tabindex="0" aria-labelledby="finding-transgender">
+              <div class="finding-content">
+                <h3 id="finding-transgender">Transgender</h3>
+                <ul><li>Longer hair</li><li>Feminine styling</li><li>Open necklines</li><li>Soft cardigans</li><li>Small jewellery</li></ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="next-screen next-with-carousel" id="whats-next" aria-labelledby="whats-next-title">
+      <div class="next-inner">
+        <h2 class="next-title" id="whats-next-title">What's Next?</h2>
+        <p class="next-intro">Learn about our methodology, explore the real-life family experiences of queer communities, and examine the historical evolution of policies across different models</p>
+        <div class="next-carousel" role="region" aria-roledescription="carousel" aria-label="What's Next resources">
+        <div class="next-carousel-viewport" tabindex="0" aria-label="Drag left or right, or use the arrow keys to browse cards">
+        <div class="next-cards">
+        <div class="next-slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
+        <button class="next-card" id="next-card-approach" type="button" aria-expanded="false" aria-controls="next-panel-approach">
+          <span class="next-card-number" aria-hidden="true">01</span>
+          <span class="next-card-title">Our Approach</span>
+          <span class="next-card-teaser">Methodologies used in the research and design process</span>
+        </button>
+        </div>
+        <div class="next-slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+        <button class="next-card" id="next-card-families" type="button" aria-expanded="false" aria-controls="next-panel-families">
+          <span class="next-card-number" aria-hidden="true">02</span>
+          <span class="next-card-title">Real-life Queer Family Life</span>
+          <span class="next-card-teaser">Research on everyday experiences of LGBTQ+ parents and families.</span>
+        </button>
+        </div>
+        <div class="next-slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+        <button class="next-card" id="next-card-policy" type="button" aria-expanded="false" aria-controls="next-panel-policy">
+          <span class="next-card-number" aria-hidden="true">03</span>
+          <span class="next-card-title">Model Policy Timeline</span>
+          <span class="next-card-teaser">Official generation and moderation rules provided by leading AI websites</span>
+        </button>
+        </div>
+        </div>
+        </div>
+        <div class="next-carousel-dots" aria-label="Choose a card" hidden>
+          <button type="button" data-slide="0" aria-label="Show Our Approach"></button>
+          <button type="button" data-slide="1" aria-label="Show Real-life Queer Family Life"></button>
+          <button type="button" data-slide="2" aria-label="Show Model Policy Timeline"></button>
+        </div>
+        <p class="next-carousel-status sr-only" aria-live="polite" aria-atomic="true"></p>
+        </div>
+      </div>
+      <section class="next-panel" id="next-panel-approach" role="region" aria-labelledby="next-heading-approach" hidden>
+        <header class="next-panel-header"><h3 id="next-heading-approach"><span aria-hidden="true">01</span>Our Approach</h3><button class="next-panel-close" type="button" aria-label="Close Our Approach"><span aria-hidden="true">×</span></button></header>
+        <div class="next-panel-body"><div class="next-method-grid"><article class="next-method"><h4>01 — Comparative Prompt Audit</h4><p>Compare prompts with and without queer identity terms. Ensure consistency across platforms, styles, aspect ratios and output quantities. Record recurring visual patterns and rejected prompts.</p><p class="next-citation">Ungless, Ross &amp; Lauscher (2023) — Stereotypes and Smut: The (Mis)representation of Non-cisgender Identities by Text-to-Image Models</p><a href="https://doi.org/10.18653/v1/2023.findings-acl.502" target="_blank" rel="noopener noreferrer">View related study ↗</a></article><article class="next-method"><h4>02 — Research through Design</h4><p>Treat the prototype as part of the research process. Test, modify and optimise the website through repeated iteration.</p><p class="next-citation">Zimmerman, Forlizzi &amp; Evenson (2007) — Research through Design as a Method for Interaction Design Research in HCI</p><a href="https://doi.org/10.1145/1240624.1240704" target="_blank" rel="noopener noreferrer">View article ↗</a></article><article class="next-method"><h4>03 — Feminist HCI</h4><p>Consider identity, equity and participation. Treat users as people with different backgrounds and experiences.</p><p class="next-citation">Bardzell (2010) — Feminist HCI: Taking Stock and Outlining an Agenda for Design</p><a href="https://doi.org/10.1145/1753326.1753521" target="_blank" rel="noopener noreferrer">View article ↗</a></article></div></div>
+      </section>
+      <section class="next-panel" id="next-panel-families" role="region" aria-labelledby="next-heading-families" hidden>
+        <header class="next-panel-header"><h3 id="next-heading-families"><span aria-hidden="true">02</span>Real-life Queer Family Life</h3><button class="next-panel-close" type="button" aria-label="Close Real-life Queer Family Life"><span aria-hidden="true">×</span></button></header>
+        <div class="next-panel-body"><div class="next-studies"><article class="next-study"><p class="next-author">Ammann &amp; Miller (2026)</p><div><h4>Queerying Doing Family: Gay, Bisexual, and Trans Parents in Switzerland</h4><a href="https://www.tandfonline.com/doi/full/10.1080/27703371.2025.2556010" target="_blank" rel="noopener noreferrer">Read full article ↗</a></div></article><article class="next-study"><p class="next-author">Rossouw &amp; Brown (2026)</p><div><h4>Transforming Family Communication: How LGBTQ+ Parents in South Africa Create Affirming Sexuality Dialogues</h4><a href="https://journals.sagepub.com/doi/10.1177/10443894251385280" target="_blank" rel="noopener noreferrer">Read full article ↗</a></div></article><article class="next-study"><p class="next-author">Zadeh, Imrie &amp; Golombok (2021)</p><div><h4>Stories of Sameness and Difference: Children and Adolescents with a Trans* Parent</h4><a href="https://www.tandfonline.com/doi/full/10.1080/1550428X.2019.1683785" target="_blank" rel="noopener noreferrer">Read full article ↗</a></div></article><article class="next-study"><p class="next-author">Gartrell et al. (2019)</p><div><h4>“We Were Among the First Non-traditional Families”: Lesbian Parenting After 25 Years</h4><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.02414/full" target="_blank" rel="noopener noreferrer">Read full article ↗</a></div></article><article class="next-study"><p class="next-author">Underwood (2026)</p><div><h4>The Gay Parental Turn: Canadian Gay Fathers and the Reorganization of Care and Community</h4><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13051639/" target="_blank" rel="noopener noreferrer">Read full article ↗</a></div></article></div></div>
+      </section>
+      <section class="next-panel" id="next-panel-policy" role="region" aria-labelledby="next-heading-policy" hidden>
+        <header class="next-panel-header"><h3 id="next-heading-policy"><span aria-hidden="true">03</span>Model Policy Timeline</h3><button class="next-panel-close" type="button" aria-label="Close Model Policy Timeline"><span aria-hidden="true">×</span></button></header>
+        <div class="next-panel-body"><div class="next-model-tabs" role="tablist" aria-label="AI platforms"><button id="next-tab-openai" type="button" role="tab" aria-selected="true" aria-controls="next-policy-openai" tabindex="0">OpenAI</button><button id="next-tab-google" type="button" role="tab" aria-selected="false" aria-controls="next-policy-google" tabindex="-1">Google</button><button id="next-tab-adobe" type="button" role="tab" aria-selected="false" aria-controls="next-policy-adobe" tabindex="-1">Adobe Firefly</button><button id="next-tab-doubao" type="button" role="tab" aria-selected="false" aria-controls="next-policy-doubao" tabindex="-1">Doubao</button><button id="next-tab-midjourney" type="button" role="tab" aria-selected="false" aria-controls="next-policy-midjourney" tabindex="-1">Midjourney</button></div><div id="next-policy-openai" class="next-policy-content" role="tabpanel" aria-labelledby="next-tab-openai" tabindex="0"><ol class="next-timeline"><li><p class="next-policy-year">2022</p><div><h4>DALL·E 2</h4><ul><li>Violent and sexual images filtered from training data</li><li>Guardrails used to prevent policy-violating image generation</li></ul><a href="https://openai.com/index/dall-e-2-pre-training-mitigations/" target="_blank" rel="noopener noreferrer">Official source ↗</a></div></li><li><p class="next-policy-year">2025</p><div><h4>GPT-4o Image Generation</h4><ul><li>Blocks child sexual abuse material</li><li>Blocks sexual deepfakes</li><li>Heightened restrictions for real people</li><li>Strong safeguards around nudity and graphic violence involving real people</li></ul><a href="https://openai.com/index/introducing-4o-image-generation/" target="_blank" rel="noopener noreferrer">Official source ↗</a></div></li><li><p class="next-policy-year">2026</p><div><h4>ChatGPT Images 2.0</h4><ul><li>Safety safeguards for realistic deepfakes</li><li>Addresses political, sexual and other sensitive imagery of real people</li></ul><a href="https://deploymentsafety.openai.com/chatgpt-images-2-0/automated-evaluations-and-adversarial-testing" target="_blank" rel="noopener noreferrer">Official source ↗</a></div></li></ol></div><div id="next-policy-google" class="next-policy-content" role="tabpanel" aria-labelledby="next-tab-google" tabindex="0" hidden><ol class="next-timeline"><li><p class="next-policy-year">2024</p><div><h4>Generative AI Prohibited Use Policy</h4><ul><li>No hate speech</li><li>No harassment, bullying, intimidation or abuse</li><li>No sexually explicit content</li><li>No non-consensual intimate imagery</li><li>No violent or harmful activity</li></ul><a href="https://policies.google.com/terms/generative-ai/use-policy" target="_blank" rel="noopener noreferrer">Official source ↗</a></div></li><li><p class="next-policy-year">Current</p><div><h4>Imagen Safety Filters</h4><ul><li>Violence</li><li>Sexual</li><li>Derogatory</li><li>Toxic</li><li>Hate</li><li>Person / face generation controls</li><li>Safety filtering for prompts and generated images</li></ul><a href="https://docs.cloud.google.com/vertex-ai/generative-ai/docs/image/responsible-ai-imagen" target="_blank" rel="noopener noreferrer">Official source ↗</a></div></li></ol></div><div id="next-policy-adobe" class="next-policy-content" role="tabpanel" aria-labelledby="next-tab-adobe" tabindex="0" hidden><ol class="next-timeline"><li><p class="next-policy-year">2026</p><div><h4>Updated Adobe Generative AI User Guidelines</h4><ul><li>No pornographic material or explicit nudity</li><li>No hateful or highly offensive content attacking or dehumanising groups based on sexual orientation</li><li>No glorification of graphic violence or gore</li><li>No sexual depictions of minors</li><li>No privacy-rights violations</li></ul><a href="https://www.adobe.com/au/legal/licenses-terms/adobe-gen-ai-user-guidelines.html" target="_blank" rel="noopener noreferrer">Official source ↗</a></div></li></ol></div><div id="next-policy-doubao" class="next-policy-content" role="tabpanel" aria-labelledby="next-tab-doubao" tabindex="0" hidden><ol class="next-timeline"><li><p class="next-policy-year">2025</p><div><h4>Doubao Community Guidelines</h4><ul><li>No obscene or pornographic content</li><li>No soft-pornographic or sexually suggestive content</li><li>No discriminatory content targeting groups</li><li>No content violating public order and accepted social norms</li></ul><a href="https://www.doubao.com/legal/community_guidelines" target="_blank" rel="noopener noreferrer">Official source ↗</a></div></li></ol></div><div id="next-policy-midjourney" class="next-policy-content" role="tabpanel" aria-labelledby="next-tab-midjourney" tabindex="0" hidden><ol class="next-timeline"><li><p class="next-policy-year">Current</p><div><h4>Community Guidelines</h4><ul><li>Safe For Work content only</li><li>No adult content</li><li>No nudity or sexualised imagery</li><li>No gore</li><li>No abusive or inherently disrespectful content</li><li>No racist, homophobic or otherwise derogatory content</li></ul><a href="https://docs.midjourney.com/hc/en-us/articles/32013696484109-Community-Guidelines" target="_blank" rel="noopener noreferrer">Official source ↗</a></div></li></ol></div></div>
+      </section>
+      <noscript><p class="next-no-script">Please enable JavaScript to open the research and policy panels.</p></noscript>
+    </section>
+    <!-- Add future full-screen sections here. -->
+  </main>
+</body>
+</html>
