@@ -38,7 +38,7 @@ const BlindGuess = (() => {
     visible: { label: 'Visible', points: 2, explanation: 'Supported by the visible cues used in this activity.' },
     assumption: { label: 'Assumption', points: 0, explanation: 'This cannot be confirmed from appearance alone.' },
     unsupported: { label: 'Not supported', points: -1, explanation: 'This description is not supported by the visible features in this image.' },
-    interpretation: { label: 'Interpretation', points: 0, explanation: 'A subjective reading of presentation, rather than a clearly supported visual description.' }
+    interpretation: { label: 'Interpretation', points: 0, explanation: 'A subjective reading of presentation.' }
   };
   function scoreRound(round, selection) {
     const points = [...new Set(selection)].reduce((sum, word) => {

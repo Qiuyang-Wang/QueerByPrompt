@@ -154,7 +154,7 @@
       const choice = element('li', 'choice-item');
       const points = category.points > 0 ? '+2' : String(category.points).replace('-', '−');
       const explanation = index === 2 && word === 'artist' ? "This cannot be confirmed from the main subject’s appearance alone." : category.explanation;
-      const separator = item.type === 'interpretation' ? ' · ' : ' ';
+      const separator = ' ';
       choice.append(element('span', 'choice-word', word), element('span', `choice-category ${item.type}`, `${category.label}${separator}${points}`), element('span', 'choice-explanation', explanation));
       choices.append(choice);
     }

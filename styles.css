@@ -140,9 +140,9 @@ summary:is(:hover, :focus-visible) .disclosure-symbol { transform: translateY(-2
 .choice-item { display: grid; grid-template-columns: 150px 180px minmax(0, 1fr); gap: 16px; padding: 13px 0; align-items: start; font-size: 16px; line-height: 1.7; }
 .choice-word { font-weight: 600; }
 .choice-category { width: fit-content; padding: 2px 9px; font-size: 12px; letter-spacing: .02em; border: 1px solid var(--line); }
-.choice-category.visible, .choice-category.unsupported, .choice-category.assumption { border: 0; border-radius: 0; background: none; font-weight: 600; padding: 0; }
+.choice-category.visible, .choice-category.unsupported, .choice-category.assumption, .choice-category.interpretation { border: 0; border-radius: 0; background: none; font-weight: 600; padding: 0; }
 .choice-category.visible { color: #34a853; }
-.choice-category.assumption { color: #fbbc05; }
+.choice-category.assumption, .choice-category.interpretation { color: #fbbc05; }
 .choice-category.unsupported { color: #ea4335; }
 .choice-explanation { color: var(--muted); }
 .review-feedback { margin-top: 24px; font-size: 17px; line-height: 1.8; max-width: 850px; }
