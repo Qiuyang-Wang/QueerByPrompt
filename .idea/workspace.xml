@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e26e0da-ec6d-4155-adb9-6d2ce8c96dfb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rounds.js" beforeDir="false" afterPath="$PROJECT_DIR$/rounds.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles.css" afterDir="false" />
-    </list>
+    <list default="true" id="8e26e0da-ec6d-4155-adb9-6d2ce8c96dfb" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,7 +60,7 @@
       <workItem from="1791299576716" duration="607000" />
       <workItem from="1791301864967" duration="462000" />
       <workItem from="1791358643455" duration="2134000" />
-      <workItem from="1791369889031" duration="309000" />
+      <workItem from="1791369889031" duration="803000" />
     </task>
     <servers />
   </component>
